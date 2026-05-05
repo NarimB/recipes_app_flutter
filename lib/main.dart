@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_final_project/data/models/favorite_model.dart';
 import 'package:flutter_final_project/data/models/recipe_model.dart';
+import 'package:flutter_final_project/domain/repositories/auth_repository.dart';
 import 'package:flutter_final_project/locator.dart';
+import 'package:flutter_final_project/presentation/bloc/auth/auth_cubit.dart';
+import 'package:flutter_final_project/presentation/widgets/auth_wrapper.dart';
 import 'package:hive_ce_flutter/adapters.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -32,13 +36,20 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Recipe Catalog',
-      debugShowCheckedModeBanner: false,
-      theme: AppTheme.light(),
-      darkTheme: AppTheme.dark(),
-      themeMode: ThemeMode.system,
-      home: const Scaffold(body: Center(child: Text('Recipe Catalog'))),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (_) => AuthCubit(locator<AuthRepository>())..checkAuth(),
+        ),
+      ],
+      child: MaterialApp(
+        title: 'Recipe Catalog',
+        debugShowCheckedModeBanner: false,
+        theme: AppTheme.light(),
+        darkTheme: AppTheme.dark(),
+        themeMode: ThemeMode.system,
+        home: const AuthWrapper(),
+      ),
     );
   }
 }
