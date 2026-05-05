@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_final_project/data/models/favorite_model.dart';
+import 'package:flutter_final_project/data/models/recipe_model.dart';
+import 'package:flutter_final_project/locator.dart';
+import 'package:hive_ce_flutter/adapters.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'core/theme/app_theme.dart';
@@ -13,6 +17,12 @@ Future<void> main() async {
     url: dotenv.env['API_URL']!,
     anonKey: dotenv.env['API_KEY']!,
   );
+
+  await Hive.initFlutter();
+  Hive.registerAdapter(RecipeModelAdapter());
+  Hive.registerAdapter(FavoriteModelAdapter());
+
+  await setupDependencies();
 
   runApp(const MyApp());
 }
