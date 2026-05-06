@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_final_project/domain/entities/recipe.dart';
+import 'package:flutter_final_project/presentation/widgets/favorite_button.dart';
 
 class RecipeDetailsScreen extends StatelessWidget {
   const RecipeDetailsScreen({super.key, required this.recipe});
@@ -18,7 +19,15 @@ class RecipeDetailsScreen extends StatelessWidget {
     final theme = Theme.of(context);
 
     return Scaffold(
-      appBar: AppBar(title: Text(recipe.title)),
+      appBar: AppBar(
+        title: Text(recipe.title),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 16),
+            child: FavoriteButton(recipe: recipe),
+          ),
+        ],
+      ),
       body: ListView(
         children: [
           if (recipe.imageUrl != null)

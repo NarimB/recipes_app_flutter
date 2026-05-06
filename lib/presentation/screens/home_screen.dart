@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_final_project/presentation/bloc/favorites/favorites_cubit.dart';
 import 'package:flutter_final_project/presentation/screens/create_recipe_screen.dart';
 import 'package:flutter_final_project/presentation/screens/favorites_screen.dart';
 import 'package:flutter_final_project/presentation/screens/profile_screen.dart';
@@ -10,6 +11,7 @@ import 'package:flutter_final_project/domain/repositories/recipe_repository.dart
 import 'package:flutter_final_project/locator.dart';
 import 'package:flutter_final_project/presentation/bloc/create_recipe/create_recipe_cubit.dart';
 import 'package:flutter_final_project/presentation/bloc/recipe_feed/recipe_feed_cubit.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -19,6 +21,12 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    context.read<FavoritesCubit>().loadFavorites();
+  }
 
   @override
   Widget build(BuildContext context) {

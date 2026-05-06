@@ -4,9 +4,11 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_final_project/data/models/favorite_model.dart';
 import 'package:flutter_final_project/data/models/recipe_model.dart';
 import 'package:flutter_final_project/domain/repositories/auth_repository.dart';
+import 'package:flutter_final_project/domain/repositories/favorites_repository.dart';
 import 'package:flutter_final_project/domain/repositories/recipe_repository.dart';
 import 'package:flutter_final_project/locator.dart';
 import 'package:flutter_final_project/presentation/bloc/auth/auth_cubit.dart';
+import 'package:flutter_final_project/presentation/bloc/favorites/favorites_cubit.dart';
 import 'package:flutter_final_project/presentation/bloc/recipe_feed/recipe_feed_cubit.dart';
 import 'package:flutter_final_project/presentation/widgets/auth_wrapper.dart';
 import 'package:hive_ce_flutter/adapters.dart';
@@ -45,6 +47,12 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (_) => RecipeFeedCubit(locator<RecipeRepository>()),
+        ),
+        BlocProvider(
+          create: (_) => FavoritesCubit(
+            locator<FavoritesRepository>(),
+            locator<AuthRepository>(),
+          ),
         ),
       ],
       child: MaterialApp(
