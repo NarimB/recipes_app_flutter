@@ -3,7 +3,13 @@ import 'package:flutter_final_project/presentation/screens/create_recipe_screen.
 import 'package:flutter_final_project/presentation/screens/favorites_screen.dart';
 import 'package:flutter_final_project/presentation/screens/profile_screen.dart';
 import 'package:flutter_final_project/presentation/screens/recipe_feed_screen.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:flutter_final_project/domain/repositories/auth_repository.dart';
+import 'package:flutter_final_project/domain/repositories/recipe_repository.dart';
+import 'package:flutter_final_project/locator.dart';
+import 'package:flutter_final_project/presentation/bloc/create_recipe/create_recipe_cubit.dart';
+import 'package:flutter_final_project/presentation/bloc/recipe_feed/recipe_feed_cubit.dart';
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -29,8 +35,21 @@ class _HomeScreenState extends State<HomeScreen> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (_) => const CreateRecipeScreen()),
-          );
+            MaterialPageRoute(
+              builder: (_) => BlocProvider(
+                create: (_) => CreateRecipeCubit(
+                  locator<RecipeRepository>(),
+                  locator<ImagePicker>(),
+                  locator<AuthRepository>(),
+                ),
+                child: const CreateRecipeScreen(),
+              ),
+            ),
+          ).then((_) {
+            if (context.mounted) {
+              context.read<RecipeFeedCubit>().loadFeed();
+            }
+          });
         },
         icon: const Icon(Icons.add_rounded),
         label: const Text('Создать'),
