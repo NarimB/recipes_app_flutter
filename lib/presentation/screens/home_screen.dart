@@ -58,6 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ).then((_) {
             if (context.mounted) {
               context.read<RecipeFeedCubit>().loadFeed();
+              context.read<ProfileCubit>().loadProfile();
             }
           });
         },

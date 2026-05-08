@@ -48,7 +48,7 @@ class AuthCubit extends Cubit<AuthState> {
       emit(
         state.copyWith(
           status: AuthStatus.error,
-          errorMessage: 'Ошибка при регистрации: $e',
+          errorMessage: 'Ошибка при регистрации',
         ),
       );
     }

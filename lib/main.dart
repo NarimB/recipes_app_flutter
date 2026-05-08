@@ -65,7 +65,7 @@ class MyApp extends StatelessWidget {
           create: (_) => FavoritesCubit(
             locator<FavoritesRepository>(),
             locator<AuthRepository>(),
-          ),  
+          ),
         ),
         BlocProvider(
           create: (_) => ProfileCubit(
