@@ -1,3 +1,5 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -6,6 +8,7 @@ import 'package:flutter_final_project/data/models/recipe_model.dart';
 import 'package:flutter_final_project/domain/repositories/auth_repository.dart';
 import 'package:flutter_final_project/domain/repositories/favorites_repository.dart';
 import 'package:flutter_final_project/domain/repositories/recipe_repository.dart';
+import 'package:flutter_final_project/firebase_options.dart';
 import 'package:flutter_final_project/locator.dart';
 import 'package:flutter_final_project/presentation/bloc/auth/auth_cubit.dart';
 import 'package:flutter_final_project/presentation/bloc/favorites/favorites_cubit.dart';
@@ -17,8 +20,17 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'core/theme/app_theme.dart';
 
+@pragma('vm:entry-point')
+Future<void> _firebaseMessagingBgHandler(RemoteMessage message) async {
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+}
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBgHandler);
 
   await dotenv.load(fileName: '.env');
 
@@ -53,7 +65,7 @@ class MyApp extends StatelessWidget {
           create: (_) => FavoritesCubit(
             locator<FavoritesRepository>(),
             locator<AuthRepository>(),
-          ),
+          ),  
         ),
         BlocProvider(
           create: (_) => ProfileCubit(
