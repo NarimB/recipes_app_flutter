@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_final_project/presentation/bloc/favorites/favorites_cubit.dart';
+import 'package:flutter_final_project/presentation/bloc/profile/profile_cubit.dart';
 import 'package:flutter_final_project/presentation/screens/create_recipe_screen.dart';
 import 'package:flutter_final_project/presentation/screens/favorites_screen.dart';
 import 'package:flutter_final_project/presentation/screens/profile_screen.dart';
@@ -26,6 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     context.read<FavoritesCubit>().loadFavorites();
+    context.read<ProfileCubit>().loadProfile();
   }
 
   @override

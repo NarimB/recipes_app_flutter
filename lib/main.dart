@@ -9,6 +9,7 @@ import 'package:flutter_final_project/domain/repositories/recipe_repository.dart
 import 'package:flutter_final_project/locator.dart';
 import 'package:flutter_final_project/presentation/bloc/auth/auth_cubit.dart';
 import 'package:flutter_final_project/presentation/bloc/favorites/favorites_cubit.dart';
+import 'package:flutter_final_project/presentation/bloc/profile/profile_cubit.dart';
 import 'package:flutter_final_project/presentation/bloc/recipe_feed/recipe_feed_cubit.dart';
 import 'package:flutter_final_project/presentation/widgets/auth_wrapper.dart';
 import 'package:hive_ce_flutter/adapters.dart';
@@ -51,6 +52,12 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (_) => FavoritesCubit(
             locator<FavoritesRepository>(),
+            locator<AuthRepository>(),
+          ),
+        ),
+        BlocProvider(
+          create: (_) => ProfileCubit(
+            locator<RecipeRepository>(),
             locator<AuthRepository>(),
           ),
         ),
