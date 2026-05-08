@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_final_project/core/category_labels.dart';
 import 'package:flutter_final_project/domain/entities/recipe.dart';
 import 'package:flutter_final_project/presentation/widgets/favorite_button.dart';
 
@@ -84,7 +85,7 @@ class RecipeDetailsScreen extends StatelessWidget {
                       color: theme.colorScheme.onSurfaceVariant,
                     ),
                     const SizedBox(width: 6),
-                    Text(recipe.category, style: theme.textTheme.bodyMedium),
+                    Text(categoryLabel(recipe.category), style: theme.textTheme.bodyMedium),
                   ],
                 ),
               ],

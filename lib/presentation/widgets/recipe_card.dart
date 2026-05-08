@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_final_project/core/category_labels.dart';
 import 'package:flutter_final_project/domain/entities/recipe.dart';
 import 'package:flutter_final_project/presentation/screens/recipe_details_screen.dart';
 import 'package:flutter_final_project/presentation/widgets/favorite_button.dart';
@@ -73,7 +74,7 @@ class RecipeCard extends StatelessWidget {
                       const SizedBox(width: 12),
                       Text('•', style: theme.textTheme.bodySmall),
                       const SizedBox(width: 12),
-                      Text(recipe.category, style: theme.textTheme.bodySmall),
+                      Text(categoryLabel(recipe.category), style: theme.textTheme.bodySmall),
                       const Spacer(),
                       FavoriteButton(recipe: recipe),
                     ],
